@@ -64,6 +64,12 @@ class InsufficientNetworkQueryArguments(ValueError):
         Exception.__init__(self,*args,**kwargs)
 
 
+
+def test_function(a):
+    print("hello, ", a)
+
+
+
 def save_to_cache(url, response_json):
     """
     Save an HTTP response json object to the cache.
@@ -87,6 +93,9 @@ def save_to_cache(url, response_json):
     -------
     None
     """
+    
+    print("save_to_cache()")
+    
     if settings.use_cache:
         if response_json is None:
             log('Saved nothing to cache because response_json is None')
@@ -121,6 +130,9 @@ def get_from_cache(url):
     -------
     response_json : dict
     """
+    
+    print("get_from_cache()")
+    
     # if the tool is configured to use the cache
     if settings.use_cache:
         # determine the filename by hashing the url
@@ -154,6 +166,8 @@ def get_http_headers(user_agent=None, referer=None, accept_language=None):
     headers : dict
     """
 
+    print("get_http_headers()")
+
     if user_agent is None:
         user_agent = settings.default_user_agent
     if referer is None:
@@ -183,6 +197,9 @@ def get_pause_duration(recursive_delay=5, default_duration=10):
     -------
     int
     """
+    
+    print("get_pause_duration()")
+    
     try:
         response = requests.get('http://overpass-api.de/api/status', headers=get_http_headers())
         status = response.text.split('\n')[3]
@@ -243,6 +260,9 @@ def nominatim_request(params, type = "search", pause_duration=1, timeout=30, err
     -------
     response_json : dict
     """
+
+
+    print("nominatim_request()")
 
     known_requests = {"search", "reverse", "lookup"}
     if type not in known_requests:
@@ -321,6 +341,8 @@ def overpass_request(data, pause_duration=None, timeout=180, error_pause_duratio
     dict
     """
 
+    print("overpass_request()")
+
     # define the Overpass API URL, then construct a GET-style URL as a string to
     # hash to look up/save to cache
     url = 'http://overpass-api.de/api/interpreter'
@@ -392,6 +414,9 @@ def osm_polygon_download(query, limit=1, polygon_geojson=1):
     -------
     dict
     """
+    
+    print("osm_polygon_download")
+    
     # define the parameters
     params = OrderedDict()
     params['format'] = 'json'
@@ -436,6 +461,9 @@ def gdf_from_place(query, gdf_name=None, which_result=1, buffer_dist=None):
     -------
     GeoDataFrame
     """
+    
+    print("gdf_from_place()")
+    
     # if no gdf_name is passed, just use the query
     assert (isinstance(query, dict) or isinstance(query, str)), 'query must be a dict or a string'
     if (gdf_name is None) and isinstance(query, dict):
@@ -508,6 +536,9 @@ def gdf_from_places(queries, gdf_name='unnamed', buffer_dist=None):
     -------
     GeoDataFrame
     """
+    
+    print("gdf_from_place()")
+    
     # create an empty GeoDataFrame then append each result as a new row
     gdf = gpd.GeoDataFrame()
     for query in queries:
@@ -537,6 +568,9 @@ def get_osm_filter(network_type):
     -------
     string
     """
+    
+    print("get_osm_filter")
+    
     filters = {}
 
     # driving: filter out un-drivable roads, service roads, private ways, and
@@ -633,6 +667,8 @@ def osm_net_download(polygon=None, north=None, south=None, east=None, west=None,
     response_jsons : list
     """
 
+    print("osm_net_download")
+
     # check if we're querying by polygon or by bounding box based on which
     # argument(s) where passed into this function
     by_poly = polygon is not None
@@ -649,6 +685,8 @@ def osm_net_download(polygon=None, north=None, south=None, east=None, west=None,
         osm_filter = get_osm_filter(network_type)
     response_jsons = []
 
+
+    print("osm_filter for osm_net_download: ", osm_filter)
     # pass server memory allocation in bytes for the query to the API
     # if None, pass nothing so the server will use its default allocation size
     # otherwise, define the query's maxsize parameter value as whatever the
@@ -687,6 +725,7 @@ def osm_net_download(polygon=None, north=None, south=None, east=None, west=None,
                                               infrastructure=infrastructure,
                                               filters=osm_filter,
                                               timeout=timeout, maxsize=maxsize)
+            print("query string to Overpass: ", query_str)
             response_json = overpass_request(data={'data':query_str}, timeout=timeout)
             response_jsons.append(response_json)
         log('Got all network data within bounding box from API in {:,} request(s) and {:,.2f} seconds'.format(len(geometry), time.time()-start_time))
@@ -732,6 +771,8 @@ def consolidate_subdivide_geometry(geometry, max_query_area_size):
     geometry : Polygon or MultiPolygon
     """
 
+    print('consolidate_subdivide_geometry()')
+
     # let the linear length of the quadrats (with which to subdivide the
     # geometry) be the square root of max area size
     quadrat_width = math.sqrt(max_query_area_size)
@@ -768,6 +809,8 @@ def get_polygons_coordinates(geometry):
     -------
     polygon_coord_strs : list
     """
+
+    print('get_polygons_coordinates()')
 
     # extract the exterior coordinates of the geometry to pass to the API later
     polygons_coords = []
@@ -810,6 +853,8 @@ def get_node(element):
     dict
     """
 
+    print('get_node()')
+
     node = {}
     node['y'] = element['lat']
     node['x'] = element['lon']
@@ -834,6 +879,8 @@ def get_path(element):
     -------
     dict
     """
+
+    print('get_path()')
 
     path = {}
     path['osmid'] = element['id']
@@ -864,6 +911,8 @@ def parse_osm_nodes_paths(osm_data):
     nodes, paths : tuple
     """
 
+    print('parse_osm_nodes_paths()')
+
     nodes = {}
     paths = {}
     for element in osm_data['elements']:
@@ -891,6 +940,8 @@ def remove_isolated_nodes(G):
     -------
     networkx multidigraph
     """
+    
+    print('remove_isolated_nodes()')
 
     isolated_nodes = [node for node, degree in dict(G.degree()).items() if degree < 1]
     G.remove_nodes_from(isolated_nodes)
@@ -922,6 +973,8 @@ def truncate_graph_dist(G, source_node, max_distance=1000, weight='length', reta
     -------
     networkx multidigraph
     """
+
+    print('truncate_graph_dist()')
 
     # get the shortest distance between the node and every other node, then
     # remove every node further than max_distance away
@@ -970,6 +1023,8 @@ def truncate_graph_bbox(G, north, south, east, west, truncate_by_edge=False, ret
     -------
     networkx multidigraph
     """
+
+    print('truncate_graph_bbox()')
 
     start_time = time.time()
     G = G.copy()
@@ -1034,6 +1089,8 @@ def quadrat_cut_geometry(geometry, quadrat_width, min_num=3, buffer_amount=1e-9)
     shapely MultiPolygon
     """
 
+    print('quadrat_cut_geometry()')
+
     # create n evenly spaced points between the min and max x and y bounds
     west, south, east, north = geometry.bounds
     x_num = math.ceil((east-west) / quadrat_width) + 1
@@ -1080,6 +1137,8 @@ def intersect_index_quadrats(gdf, geometry, quadrat_width=0.05, min_num=3, buffe
     -------
     GeoDataFrame
     """
+
+    print('intersect_index_quadrats()')
 
     # create an empty dataframe to append matches to
     points_within_geometry = pd.DataFrame()
@@ -1156,6 +1215,8 @@ def truncate_graph_polygon(G, polygon, retain_all=False, truncate_by_edge=False,
     -------
     networkx multidigraph
     """
+    
+    print('truncate_graph_polygon()')
 
     start_time = time.time()
     G = G.copy()
@@ -1198,6 +1259,8 @@ def add_edge_lengths(G):
     G : networkx multidigraph
     """
 
+    print('add_edge_lengths()')
+
     start_time = time.time()
 
     # first load all the edges' origin and destination coordinates as a
@@ -1237,6 +1300,8 @@ def add_path(G, data, one_way):
     -------
     None
     """
+    
+    print('add_path()')
 
     # extract the ordered list of nodes from this path element, then delete it
     # so we don't add it as an attribute to the edge later
@@ -1277,6 +1342,8 @@ def add_paths(G, paths, bidirectional=False):
     -------
     None
     """
+    
+    print('add_paths()')
 
     # the list of values OSM uses in its 'oneway' tag to denote True
     osm_oneway_values = ['yes', 'true', '1', '-1']
@@ -1328,6 +1395,8 @@ def create_graph(response_jsons, name='unnamed', retain_all=False, bidirectional
     -------
     networkx multidigraph
     """
+    
+    print('create_graph()')
 
     log('Creating networkx graph from downloaded OSM data...')
     start_time = time.time()
@@ -1396,6 +1465,8 @@ def bbox_from_point(point, distance=1000, project_utm=False, return_crs=False):
     north, south, east, west : tuple, if return_crs=False
     north, south, east, west, crs_proj : tuple, if return_crs=True
     """
+    
+    print('bbox_from_point()')
 
     # reverse the order of the (lat,lng) point so it is (x,y) for shapely, then
     # project to UTM and buffer in meters
@@ -1469,6 +1540,8 @@ def graph_from_bbox(north, south, east, west, network_type='all_private',
     -------
     networkx multidigraph
     """
+    
+    print('graph_frombbox()')
 
     if clean_periphery and simplify:
         # create a new buffered bbox 0.5km around the desired one
@@ -1578,6 +1651,8 @@ def graph_from_point(center_point, distance=1000, distance_type='bbox',
     -------
     networkx multidigraph
     """
+    
+    print('graph_from_point()')
 
     if distance_type not in ['bbox', 'network']:
         raise InvalidDistanceType('distance_type must be "bbox" or "network"')
@@ -1662,6 +1737,8 @@ def graph_from_address(address, distance=1000, distance_type='bbox',
     networkx multidigraph or tuple
         multidigraph or optionally (multidigraph, tuple)
     """
+    
+    print('graph_from_address()')
 
     # geocode the address string to a (lat, lon) point
     point = geocode(query=address)
@@ -1729,6 +1806,8 @@ def graph_from_polygon(polygon, network_type='all_private', simplify=True,
     -------
     networkx multidigraph
     """
+    
+    print('graph_from_polygon()')
 
     # verify that the geometry is valid and is a shapely Polygon/MultiPolygon
     # before proceeding
@@ -1856,6 +1935,8 @@ def graph_from_place(query, network_type='all_private', simplify=True,
     -------
     networkx multidigraph
     """
+    
+    print('graph_from_place()')
 
     # create a GeoDataFrame with the spatial boundaries of the place(s)
     if isinstance(query, str) or isinstance(query, dict):
@@ -1907,6 +1988,10 @@ def graph_from_file(filename, bidirectional=False, simplify=True,
     -------
     networkx multidigraph
     """
+    
+    print('graph_from_file()')
+    
+    
     # transmogrify file of OSM XML data into JSON
     response_jsons = [overpass_json_from_file(filename)]
 
