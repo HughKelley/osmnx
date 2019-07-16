@@ -68,6 +68,9 @@ class InsufficientNetworkQueryArguments(ValueError):
 def test_function(a):
     print("hello, ", a)
 
+def test_function_2(a):
+	print("test function 2", a)
+
 
 
 def save_to_cache(url, response_json):
