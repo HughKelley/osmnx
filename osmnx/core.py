@@ -856,7 +856,8 @@ def get_node(element):
     dict
     """
 
-    print('get_node()')
+    # print('get_node()')
+    # too repetitive called from loop
 
     node = {}
     node['y'] = element['lat']
