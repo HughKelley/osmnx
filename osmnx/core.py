@@ -883,7 +883,8 @@ def get_path(element):
     dict
     """
 
-    print('get_path()')
+    #print('get_path()')
+    #called in a loop, don't print here
 
     path = {}
     path['osmid'] = element['id']
@@ -1304,7 +1305,8 @@ def add_path(G, data, one_way):
     None
     """
     
-    print('add_path()')
+    #print('add_path()')
+    #called in a loop, don't print here
 
     # extract the ordered list of nodes from this path element, then delete it
     # so we don't add it as an attribute to the edge later
