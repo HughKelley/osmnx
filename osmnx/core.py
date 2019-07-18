@@ -350,6 +350,8 @@ def overpass_request(data, pause_duration=None, timeout=180, error_pause_duratio
     # hash to look up/save to cache
     url = 'http://overpass-api.de/api/interpreter'
     prepared_url = requests.Request('GET', url, params=data).prepare().url
+    print("url for overpass request", prepared_url)
+
     cached_response_json = get_from_cache(prepared_url)
 
     if cached_response_json is not None:
