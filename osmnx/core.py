@@ -631,7 +631,7 @@ def get_osm_filter(network_type):
     # way[highway=path][bicycle=designated]
     # '["area"!~"yes"]["highway"="cycleway"]["highway"="bridleway"]["highway"="footway"]'
 
-    filters['moderate_bike'] =  = ('["area"!~"yes"]["bicycle!~"no"]["highway"="cycleway|footway|path|pedestrian|living_street|residential"]'
+    filters['moderate_bike'] = ('["area"!~"yes"]["bicycle!~"no"]["highway"="cycleway|footway|path|pedestrian|living_street|residential"]'
                        '["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
 
