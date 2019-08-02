@@ -620,6 +620,21 @@ def get_osm_filter(network_type):
     # no filter, needed for infrastructures other than "highway"
     filters['none'] = ''
 
+
+
+    #  my Filters
+    ###################################################################
+
+    filters['basic_bike'] = ('["area"!~"yes"]["bicycle!~"no"]["highway"="cycleway|footway|path|pedestrian"]'
+                       '["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+
+    # way[highway=path][bicycle=designated]
+    # '["area"!~"yes"]["highway"="cycleway"]["highway"="bridleway"]["highway"="footway"]'
+
+    filters['moderate_bike'] =  = ('["area"!~"yes"]["bicycle!~"no"]["highway"="cycleway|footway|path|pedestrian|living_street|residential"]'
+                       '["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+
+
     if network_type in filters:
         osm_filter = filters[network_type]
     else:
