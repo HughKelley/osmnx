@@ -625,7 +625,7 @@ def get_osm_filter(network_type):
     #  my Filters
     ###################################################################
 
-    filters['basic_bike'] = ('["area"!~"yes"]["highway"="cycleway"]["highway"="footway"]["highway="pedestrian"]["highway"="path"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['basic_bike'] = ('["area"!~"yes"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
     # the | doesn't work for =, only for !~ it seems 
 
