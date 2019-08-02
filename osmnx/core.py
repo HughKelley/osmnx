@@ -632,13 +632,7 @@ def get_osm_filter(network_type):
     # way[highway=path][bicycle=designated]
     # '["area"!~"yes"]["highway"="cycleway"]["highway"="bridleway"]["highway"="footway"]'
 
-    filters['moderate_bike'] = ('["area"!~"yes"]["highway"="cycleway"]["highway"="footway"]["highway"="living_street"]["highway"="residential"]["highway="pedestrian"]["highway"="path"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
-
-
-
-    filters['moderate_bike'] = ('["area"!~"yes"]["bicycle!~"no"]["highway"="cycleway|footway|path|pedestrian|living_street|residential"]'
-                       '["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
-
+    filters['moderate_bike'] = ('["area"!~"yes"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
     if network_type in filters:
         osm_filter = filters[network_type]
