@@ -625,6 +625,15 @@ def get_osm_filter(network_type):
     #  my Filters
     ###################################################################
 
+    filters['bike_1'] = ('["area"!~"yes"]["highway"!~"footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+
+
+
+
+
+    ################################################
+    # Draft 1
+
     filters['basic_bike'] = ('["area"!~"yes"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
     # the | doesn't work for =, only for !~ it seems 
@@ -632,14 +641,13 @@ def get_osm_filter(network_type):
     # way[highway=path][bicycle=designated]
     # '["area"!~"yes"]["highway"="cycleway"]["highway"="bridleway"]["highway"="footway"]'
 
-    filters['moderate_bike'] = ('["area"!~"yes"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['moderate_bike'] = ('["area"!="yes"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
+    filters['tertiary_bike'] = ('["area"!="yes"]["highway"="tertiary"]["highway"="unclassified"]["highway"="tertiary_link"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
-    filters['tertiary_bike'] = ('["area"!~"yes"]["highway"="tertiary"]["highway"="unclassified"]["highway"="tertiary_link"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['secondary_bike'] = ('["area"!="yes"]["highway"="unclassified"]["highway"="secondary"]["highway"="secondary_link"]["highway"="tertiary"]["highway"="tertiary_link"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
-    filters['secondary_bike'] = ('["area"!~"yes"]["highway"="unclassified"]["highway"="secondary"]["highway"="secondary_link"]["highway"="tertiary"]["highway"="tertiary_link"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
-
-    filters['primary_bike'] = ('["area"!~"yes"]["highway"="unclassified"]["highway"="primary"]["highway"="primary_link"]["highway"="secondary"]["highway"="secondary_link"]["highway"="tertiary"]["highway"="tertiary_link"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['primary_bike'] = ('["area"!="yes"]["highway"="unclassified"]["highway"="primary"]["highway"="primary_link"]["highway"="secondary"]["highway"="secondary_link"]["highway"="tertiary"]["highway"="tertiary_link"]["highway"="cycleway"]["highway"="footway"]["highway"="pedestrian"]["highway"="path"]["highway"="living_street"]["highway"="residential"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
 
     if network_type in filters:
