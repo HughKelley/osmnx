@@ -627,6 +627,8 @@ def get_osm_filter(network_type):
 
     filters['bike_1'] = ('["area"!~"yes"]["highway"!~"footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
+    filters['bike_2'] = ('["area"!~"yes"]["highway"!~"primary|primary_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    
 
 
 
