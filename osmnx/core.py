@@ -627,13 +627,13 @@ def get_osm_filter(network_type):
 
     filters['bike_1'] = ('["area"!~"yes"]["highway"!~"footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
-    filters['bike_2'] = ('["area"!~"yes"]["highway"!~"primary|primary_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['bike_2'] = ('["area"!~"yes"]["highway"!~"primary|primary_link|trunk|trunk_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
     
-    filters['bike_3'] = ('["area"!~"yes"]["highway"!~"secondary|secondary_link|primary|primary_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['bike_3'] = ('["area"!~"yes"]["highway"!~"secondary|secondary_link|primary|primary_link|trunk|trunk_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
     
-    filters['bike_4'] = ('["area"!~"yes"]["highway"!~"tertiary|tertiary_link|secondary|secondary_link|primary|primary_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['bike_4'] = ('["area"!~"yes"]["highway"!~"tertiary|tertiary_link|secondary|secondary_link|primary|primary_link|trunk|trunk_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
-    filters['bike_5'] = ('["area"!~"yes"]["highway"!~"living_street|residential|tertiary|tertiary_link|secondary|secondary_link|primary|primary_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
+    filters['bike_5'] = ('["area"!~"yes"]["highway"!~"living_street|residential|tertiary|tertiary_link|secondary|secondary_link|primary|primary_link|trunk|trunk_link|footway|steps|corridor|elevator|escalator|motor|proposed|construction|abandoned|platform|raceway"]["bicycle"!~"no"]["service"!~"private"]{}').format(settings.default_access)
 
 
 
